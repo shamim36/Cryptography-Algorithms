@@ -27,7 +27,7 @@ void main() {
 void encryption(List<String> value, int key) {
   print('Here\'s the Encrypted result : ');
   for (int i = 0; i < value.length; i++) {
-    int charAsciiValue = CypherTextIndexValue(value[i], key) + ExtraValue64;
+    int charAsciiValue = getPlainTextToCipherText(value[i], key) + ExtraValue64;
     stdout.write(String.fromCharCode(charAsciiValue));
   }
   print('');
@@ -36,13 +36,13 @@ void encryption(List<String> value, int key) {
 void decryption(List<String> value, int key) {
   print('Here\'s the Decrypted result : ');
   for (int i = 0; i < value.length; i++) {
-    int charAsciiValue = PlainTextIndexValue(value[i], key) + ExtraValue64;
+    int charAsciiValue = getCipherTextToPlainText(value[i], key) + ExtraValue64;
     stdout.write(String.fromCharCode(charAsciiValue));
   }
   print('');
 }
 
-int CypherTextIndexValue(String valueOfIndex, int key) {
+int getPlainTextToCipherText(String valueOfIndex, int key) {
   if (valueOfIndex.codeUnitAt(0) == 32) {
     return 32 - ExtraValue64;
   }
@@ -58,7 +58,7 @@ int CypherTextIndexValue(String valueOfIndex, int key) {
   }
 }
 
-int PlainTextIndexValue(String valueOfIndex, int key) {
+int getCipherTextToPlainText(String valueOfIndex, int key) {
   if (valueOfIndex.codeUnitAt(0) == 32) {
     return 32 - ExtraValue64;
   }
