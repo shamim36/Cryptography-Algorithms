@@ -1,6 +1,7 @@
 import 'dart:io';
 
 int ExtraValue64 = 64;
+int TotalAlphabet26 = 26;
 
 void main() {
   print("Enter The Value: ");
@@ -27,7 +28,7 @@ void main() {
 void encryption(List<String> value, int key) {
   print('Here\'s the Encrypted result : ');
   for (int i = 0; i < value.length; i++) {
-    int charAsciiValue = getPlainTextToCipherText(value[i], key) + ExtraValue64;
+    int charAsciiValue = TextConvertion(value[i], key) + ExtraValue64;
     stdout.write(String.fromCharCode(charAsciiValue));
   }
   print('');
@@ -36,39 +37,37 @@ void encryption(List<String> value, int key) {
 void decryption(List<String> value, int key) {
   print('Here\'s the Decrypted result : ');
   for (int i = 0; i < value.length; i++) {
-    int charAsciiValue = getCipherTextToPlainText(value[i], key) + ExtraValue64;
+    int charAsciiValue = TextConvertion(value[i], key) + ExtraValue64;
     stdout.write(String.fromCharCode(charAsciiValue));
   }
   print('');
 }
 
-int getPlainTextToCipherText(String valueOfIndex, int key) {
+int TextConvertion(String valueOfIndex, int key) {
   if (valueOfIndex.codeUnitAt(0) == 32) {
     return 32 - ExtraValue64;
   }
 
-  int Pi = valueOfIndex.codeUnitAt(0) - ExtraValue64;
+  int InicialIndex = valueOfIndex.codeUnitAt(0) - ExtraValue64;
+  int ConversionIndex = InicialIndex + key;
+  int y = 0;
 
-  if (Pi > 26) {
-    return (Pi + key - 1) % 26 + 1;
-  } else if (Pi < 1) {
-    return (Pi - key - 1) % 26 + 1;
+  if (ConversionIndex > TotalAlphabet26) {
+    int ResultIndex = ConversionIndex % TotalAlphabet26;
+    if (ResultIndex == 0) {
+      ResultIndex == TotalAlphabet26;
+    }
+    return ResultIndex;
+  } else if (ConversionIndex < 1) {
+    print('Shamim');
+    int ModResult = (ConversionIndex.abs() % TotalAlphabet26) * TotalAlphabet26;
+    int ResultIndex = TotalAlphabet26 - ModResult;
+    if(ModResult == 0){
+      ResultIndex = TotalAlphabet26;
+    }
+    return ResultIndex;
+
   } else {
-    return (Pi + key - 1) % 26 + 1;
-  }
-}
-
-int getCipherTextToPlainText(String valueOfIndex, int key) {
-  if (valueOfIndex.codeUnitAt(0) == 32) {
-    return 32 - ExtraValue64;
-  }
-  int Ci = valueOfIndex.codeUnitAt(0) - ExtraValue64;
-
-  if (Ci > 26) {
-    return (Ci - key - 1) % 26 + 1;
-  } else if (Ci < 1) {
-    return (Ci + key - 1) % 26 + 1;
-  } else {
-    return (Ci - key - 1) % 26 + 1;
+    return ConversionIndex;
   }
 }
