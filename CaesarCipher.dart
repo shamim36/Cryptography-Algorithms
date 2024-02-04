@@ -25,49 +25,32 @@ void main() {
   }
 }
 
-void encryption(List<String> value, int key) {
+void encryption(List<String> value, int key) {    
   print('Here\'s the Encrypted result : ');
-  for (int i = 0; i < value.length; i++) {
-    int charAsciiValue = TextConvertion(value[i], key) + ExtraValue64;
+
+  for (int i = 0; i < value.length; i++) {  
+    int charAsciiValue = textConvert(value[i], key) + ExtraValue64;
     stdout.write(String.fromCharCode(charAsciiValue));
   }
   print('');
 }
 
-void decryption(List<String> value, int key) {
+void decryption(List<String> value, int key) { 
   print('Here\'s the Decrypted result : ');
   for (int i = 0; i < value.length; i++) {
-    int charAsciiValue = TextConvertion(value[i], key) + ExtraValue64;
+    int charAsciiValue = textConvert(value[i], -key) + ExtraValue64;
     stdout.write(String.fromCharCode(charAsciiValue));
   }
   print('');
 }
 
-int TextConvertion(String valueOfIndex, int key) {
+int textConvert(String valueOfIndex, int key) {
   if (valueOfIndex.codeUnitAt(0) == 32) {
     return 32 - ExtraValue64;
-  }
+  } 
+                                                                            
+  int initialIndex = valueOfIndex.codeUnitAt(0) - ExtraValue64;
+  int conversionIndex = (initialIndex + key - 1) % TotalAlphabet26 + 1;
 
-  int InicialIndex = valueOfIndex.codeUnitAt(0) - ExtraValue64;
-  int ConversionIndex = InicialIndex + key;
-  int y = 0;
-
-  if (ConversionIndex > TotalAlphabet26) {
-    int ResultIndex = ConversionIndex % TotalAlphabet26;
-    if (ResultIndex == 0) {
-      ResultIndex == TotalAlphabet26;
-    }
-    return ResultIndex;
-  } else if (ConversionIndex < 1) {
-    print('Shamim');
-    int ModResult = (ConversionIndex.abs() % TotalAlphabet26) * TotalAlphabet26;
-    int ResultIndex = TotalAlphabet26 - ModResult;
-    if(ModResult == 0){
-      ResultIndex = TotalAlphabet26;
-    }
-    return ResultIndex;
-
-  } else {
-    return ConversionIndex;
-  }
+  return conversionIndex;
 }
