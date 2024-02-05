@@ -95,7 +95,7 @@ int DecryptionProcess(String listString, String shiftKeyString) {
 
   int Pi = Ci - Ki;
 
-  if (Pi >= 0 && Pi <= TotalNumberOfAlphabet26) {
+  if (Pi >= 1 && Pi <= TotalNumberOfAlphabet26) {
     return Pi;
   } else if (Pi < 1) {
     return Pi + TotalNumberOfAlphabet26;
